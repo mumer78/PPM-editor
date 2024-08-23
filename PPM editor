@@ -1,0 +1,181 @@
+#####################################################............ phase 1
+def filereading(input_filename, output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.read()
+
+    with open(output_filename, "w") as outfile:
+        for line in content:
+            outfile.write(line)
+#######################################################
+
+####################################################### ...........phase2
+
+def negate_red(input_filename,output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.readlines()
+        max_color = int(content[2])
+
+
+    for i in range(3, len(content)):
+        row = content[i].split()
+        for j in range(0, len(row), 3):
+            red = int(row[j])
+            row[j] = str(max_color - red)
+        content[i] = ' '.join(row) + '\n'
+
+
+    with open(output_filename, "w") as outfile:
+        outfile.write(''.join(content))
+
+
+def negate_blue(input_filename,output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.readlines()
+        max_color = int(content[2])
+
+
+    for i in range(3, len(content)):
+        row = content[i].split()
+        for j in range(2, len(row), 3):
+            blue = int(row[j])
+            row[j] = str(max_color - blue)
+        content[i] = ' '.join(row) + '\n'
+
+
+    with open(output_filename, "w") as outfile:
+        outfile.writelines(content)
+
+
+def negate_green(input_filename,output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.readlines()
+        max_color = int(content[2])
+
+    for i in range(3, len(content)):
+        row = content[i].split()
+        for j in range(1, len(row), 3):
+            green = int(row[j])
+            row[j] = str(max_color - green)
+        content[i] = ' '.join(row) + '\n'
+
+    with open(output_filename, "w") as outfile:
+        outfile.writelines(content)
+
+def flip_horizontal(input_filename,output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.readlines()
+
+    # Reverse the order of RGB values in each row
+    for i in range(3, len(content)):
+        row = content[i].split()
+        row = row[::-1]  # Reverse the order of RGB values
+        content[i] = ' '.join(row) + '\n'
+
+    # Write the modified content to the output PPM file
+    with open(output_filename, "w") as outfile:
+        outfile.writelines(content)
+
+def grey_scale(input_filename,output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.readlines()
+
+    # Modify the pixel values to grayscale
+    for i in range(3, len(content)):
+        row = content[i].split()
+        for j in range(0, len(row), 3):
+            # Calculate the average of RGB values
+            avg = sum(map(int, row[j:j+3])) // 3
+            # Set all RGB values to the average
+            row[j:j+3] = [str(avg)] * 3
+        content[i] = ' '.join(row) + '\n'
+
+    # Write the modified content to the output PPM file
+    with open(output_filename, "w") as outfile:
+        outfile.writelines(content)
+
+def flatten_red(input_filename,output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.readlines()
+
+    # Set red value to zero for each pixel
+    for i in range(3, len(content)):
+        row = content[i].split()
+        for j in range(0, len(row), 3):
+            row[j] = '0'
+        content[i] = ' '.join(row) + '\n'
+
+    # Write the modified content to the output PPM file
+    with open(output_filename, "w") as outfile:
+        outfile.writelines(content)
+
+def flatten_green(input_filename,output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.readlines()
+
+    # Set green value to zero for each pixel
+    for i in range(3, len(content)):
+        row = content[i].split()
+        for j in range(1, len(row), 3):
+            row[j] = '0'
+        content[i] = ' '.join(row) + '\n'
+
+    # Write the modified content to the output PPM file
+    with open(output_filename, "w") as outfile:
+        outfile.writelines(content)
+
+def flatten_blue(input_filename,output_filename):
+    with open(input_filename, "r") as infile:
+        content = infile.readlines()
+
+    # Set blue value to zero for each pixel
+    for i in range(3, len(content)):
+        row = content[i].split()
+        for j in range(2, len(row), 3):
+            row[j] = '0'
+        content[i] = ' '.join(row) + '\n'
+
+    # Write the modified content to the output PPM file
+    with open(output_filename, "w") as outfile:
+        outfile.writelines(content)
+
+
+
+    ######################################################.............phase 3print("\nHere are your choices:")
+while True :
+    input_filename = "data.ppp"
+    print("Portable Pixmap (PPM) Image Editor! ")
+    print("1 negate red")
+    print("2 negate blue")
+    print("3 negate green")
+    print("4 flip_horizontal")
+    print("5 grey_scale")
+    print("6 flatten_red")
+    print("7 flatten_green")
+    print("8 flatten_blue")
+    print("0 exit")
+    inputp2 = int(input("enter your choice : "))
+    if inputp2 == 0 :
+        print("Exiting...")
+        break
+    else :
+       output_filename = input("Enter output file: ")
+       filereading(input_filename, output_filename)
+
+       if inputp2 == 1:
+           negate_red(input_filename, output_filename)
+       elif inputp2 == 2:
+           negate_blue(input_filename, output_filename)
+       elif inputp2 == 3:
+           negate_green(input_filename, output_filename)
+       elif inputp2 == 4:
+           flip_horizontal(input_filename, output_filename)
+       elif inputp2 == 5:
+           grey_scale(input_filename, output_filename)
+       elif inputp2 == 6:
+           flatten_red(input_filename, output_filename)
+       elif inputp2 == 7:
+           flatten_green(input_filename, output_filename)
+       elif inputp2 == 8:
+           flatten_blue(input_filename, output_filename)
+       else:
+           print("Invalid choice. Please enter a number from 0 to 8.")
